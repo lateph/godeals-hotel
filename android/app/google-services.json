@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "788235579644",
+    "firebase_url": "https://fir-project-9788c.firebaseio.com",
+    "project_id": "fir-project-9788c",
+    "storage_bucket": "fir-project-9788c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788235579644:android:2e0e9cdb0389f194",
+        "android_client_info": {
+          "package_name": "com.msa_inka.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788235579644-k4lslu0jq9ugnqgjdfq0hdtmkm1sho0c.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "788235579644-k4lslu0jq9ugnqgjdfq0hdtmkm1sho0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-L3K40Hlp5_7HSplrDRvn9a-8jBYIJtg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

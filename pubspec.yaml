@@ -1,0 +1,39 @@
+name: inka_msa
+description: A new Flutter application.
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rxdart: "^0.16.7"
+  dio: "^0.0.12"
+  shared_preferences: "^0.4.1"
+  validate: "^1.6.0"
+  intl: "0.15.6"
+  sticky_headers:
+  firebase_messaging:
+  device_info:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Muli
+      fonts:
+        - asset: assets/fonts/Muli.ttf
+        - asset: assets/fonts/Muli-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Muli-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Muli-BoldItalic.ttf
+          style: italic
+          weight: 700
+  assets:
+    - assets/images/logo.png
+    - assets/images/msa.png
+    - assets/images/bg-front.jpg
+    - assets/images/logo_outline.png
+    - assets/images/login-bg.jpg
+    - assets/images/home.jpg
