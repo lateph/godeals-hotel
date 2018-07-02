@@ -97,10 +97,12 @@ class DessertDataSource extends DataTableSource {
         index: index,
         cells: <DataCell>[
           new DataCell(new Container(
-            padding: const EdgeInsets.all(5.0),
             child: new Card(
               elevation: 3.0,
               child: new Container(
+                decoration: new BoxDecoration(
+                  border: Border(left: BorderSide(color: dessert.isGood ? Colors.green : Colors.red, width: 3.0))
+                ),
                 child: new Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -109,10 +111,10 @@ class DessertDataSource extends DataTableSource {
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: dessert.trainCarName != null ? <Widget>[
-                        new Text("Tran Set Name"),
-                        new Text("Tran Car Name"),
+                        new Text("Train Set Name"),
+                        new Text("Train Car Name"),
                       ] : <Widget>[
-                        new Text("Tran Set Name"),
+                        new Text("Train Set Name"),
                       ],
                     ),
                     new Row(

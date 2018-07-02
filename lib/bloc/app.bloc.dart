@@ -32,6 +32,8 @@ class AppBloc {
 
   final AuthBloc auth;
 
+  bool isLoadedLaunch = false;
+
   AppBloc({
     @required this.app,
     @required this.sharedPreferences,

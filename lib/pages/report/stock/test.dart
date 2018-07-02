@@ -144,15 +144,15 @@ class _ExpansionTileState extends State<ExpansionTile2> with SingleTickerProvide
           IconTheme.merge(
             data: new IconThemeData(color: _iconColor.evaluate(_easeInAnimation)),
             child: new ListTile(
-              onTap: _handleTap,
+              onTap: widget.children.length == 0 ? null : _handleTap,
 //              leading: widget.leading,
               title: new DefaultTextStyle(
                 style: Theme.of(context).textTheme.subhead.copyWith(color: titleColor),
                 child: widget.title,
               ),
-              leading: widget.children.length == 0 ? new Container() : new RotationTransition(
+              leading: new RotationTransition(
                 turns: _iconTurns,
-                child: const Icon(Icons.expand_more),
+                child: widget.children.length == 0 ? null : const Icon(Icons.expand_more),
               ),
             ),
           ),

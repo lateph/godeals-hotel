@@ -127,8 +127,8 @@ class _BottomNavigationDemoState extends State<MainPage>
         child: new ReportPage()
       ),
       new NavigationIconView(
-        icon: const Icon(Icons.info_outline),
-        title: 'About',
+        icon: const Icon(Icons.account_circle),
+        title: 'Account',
         color: Colors.indigo,
         vsync: this,
         child: new ProfilePage()

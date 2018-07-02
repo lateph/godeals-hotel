@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   bool launch = false;
 
   void simpanMessage (AppBloc appBloc, message) {
+    print('type data');
     print(appBloc.auth.deviceState.attributes['notif'].runtimeType.toString());
     if (appBloc.auth.deviceState.attributes['notif'].runtimeType.toString() == 'List<Map<String, String>>' || appBloc.auth.deviceState.attributes['notif'].runtimeType.toString() == 'List<dynamic>' || appBloc.auth.deviceState.attributes['notif'].runtimeType.toString() == 'List<Map<String, dynamic>>'){
       appBloc.auth.deviceState.attributes['notif'].insert(0,
@@ -25,7 +26,8 @@ class _HomePageState extends State<HomePage> {
           'title': message['title'],
           'messsage': message['message'],
           'time': message['time'],
-          'detailUrl': message['detailUrl']
+          'detailUrl': message['detailUrl'],
+          'status': false
         }
       );
     }
@@ -35,7 +37,8 @@ class _HomePageState extends State<HomePage> {
           'title': message['title'],
           'messsage': message['message'],
           'time': message['time'],
-          'detailUrl': message['detailUrl']
+          'detailUrl': message['detailUrl'],
+          'status': false
         }
       ];
     }
@@ -57,18 +60,17 @@ class _HomePageState extends State<HomePage> {
 //        Scaffold.of(context).showSnackBar(new SnackBar(
 //          content: new Text("New Message"),
 //        ));
-        print("onMessage: $message");
         simpanMessage(appBloc, message);
+        print('');
 //        _showItemDialog(message);
       },
       onLaunch: (Map<String, dynamic> message) {
 //        Scaffold.of(context).showSnackBar(new SnackBar(
 //          content: new Text("New Message Launc"),
 //        ));
-        print("onLaunch: $message");
 
-        if(launch == false){
-          launch = true;
+        if(appBloc.isLoadedLaunch == false){
+          appBloc.isLoadedLaunch = true;
           simpanMessage(appBloc, message);
         }
 //        _navigateToItemDetail(message);
@@ -123,9 +125,11 @@ class _HomePageState extends State<HomePage> {
                     stream: appBloc.auth.status,
                     builder: (context, snapshot) {
                       List<dynamic> childs = [];
-                      if (appBloc.auth.deviceState.notif.runtimeType.toString() == 'List<Map<String, String>>' || appBloc.auth.deviceState.notif.runtimeType.toString() == 'List<dynamic>'){
+                      if (appBloc.auth.deviceState.notif.runtimeType.toString() != 'Null'){
                         childs = appBloc.auth.deviceState.notif;
                       }
+                      print('update anak');
+                      print(appBloc.auth.deviceState.notif.runtimeType);
                       print(childs);
                       return
                         new Theme(
@@ -150,7 +154,8 @@ class _HomePageState extends State<HomePage> {
                                           child: new InkWell(
                                             // When the child is tapped, show a snackbar
                                             onTap: () {
-
+                                              appBloc.auth.deviceState.attributes['notif'][index]['status'] = true;
+                                              appBloc.auth.deviceState.save();
                                               Navigator.push(context, new MaterialPageRoute<DismissDialogAction>(
                                                 builder: (BuildContext context) => new NotifPage.edit(childs[index]['detailUrl']),
                                                 fullscreenDialog: true,
@@ -167,6 +172,7 @@ class _HomePageState extends State<HomePage> {
                                               padding: const EdgeInsets.only(top: 15.0, bottom: 15.0, left: 15.0, right: 15.0),
                                               decoration: new BoxDecoration(
                                                 color: new Color(0xA0EEEEEE),
+                                                border: Border(left: BorderSide(color: childs[index]['status'].toString() == 'false' ? Colors.red: Colors.black, width: 3.0))
                                               ),
                                               child: new Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,

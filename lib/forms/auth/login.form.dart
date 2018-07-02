@@ -39,6 +39,7 @@ class LoginForm extends BaseForm {
       fields['deviceIdentifier'] = androidInfo.id;
       fields['firebaseToken'] = token;
       print(token);
+
       Response response = await appBloc.app.api.post(
         Api.routes[ApiRoute.authLogin],
         data: {
@@ -56,9 +57,15 @@ class LoginForm extends BaseForm {
 
       // save accessToken
       var member = response.data['data'];
+      appBloc.auth.deviceState.load();
+      var dataNotif = appBloc.auth.deviceState.notif;
+
       appBloc.auth.memberState.loadJson(member);
       appBloc.auth.deviceState.loadJson(member);
-      appBloc.auth.deviceState.loadJson(member);
+      appBloc.auth.deviceState.attributes['notif'] = dataNotif;
+      if(dataNotif.runtimeType == 'null'){
+        appBloc.auth.deviceState.attributes['notif'] = [];
+      }
 
       appBloc.auth.memberState.save();
       appBloc.auth.deviceState.save();

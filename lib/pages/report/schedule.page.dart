@@ -88,6 +88,9 @@ class DessertDataSource extends DataTableSource {
             child: new Card(
               elevation: 3.0,
               child: new Container(
+                decoration: new BoxDecoration(
+                    border: Border(left: BorderSide(color: dessert.status == 'On Progress' ? Colors.orange : dessert.status == 'Created' ? Colors.blue : Colors.green, width: 3.0))
+                ),
                 child: new Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -96,7 +99,7 @@ class DessertDataSource extends DataTableSource {
                     new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children:<Widget>[
-                        new Text("Tran Car Name"),
+                        new Text("Train Car Name"),
                         new Text("Schedule Type"),
                       ],
                     ),

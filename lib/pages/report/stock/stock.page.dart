@@ -240,7 +240,6 @@ class _StockComponent extends State<StockComponentPage> {
         list = response.data['data'][0]['children'];
       });
 //      _dessertsDataSource.loadJSON(response.data['data']);
-      print(response.data['data']);
     } on DioError catch (e) {
       // on 400 error
       if (e.response != null) {
@@ -330,6 +329,7 @@ class _StockComponent extends State<StockComponentPage> {
 //
   Widget _buildex(BuildContext context, obj) {
     List<dynamic> childs = obj['children'];
+    print(childs);
     return new  ExpansionTile2(
         title:
         new Column(
