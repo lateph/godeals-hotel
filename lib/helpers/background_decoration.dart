@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 BoxDecoration backgroundDecoration(BuildContext context) {
-  AssetImage background = AssetImage('assets/images/login-bg.jpg');
+  AssetImage background = AssetImage('assets/images/login-bg.png');
 
   return new BoxDecoration(
     image: new DecorationImage(

@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final LoginForm _loginForm = LoginForm();
 
-  final AssetImage _logoImage = AssetImage('assets/images/msa.png');
+  final AssetImage _logoImage = AssetImage('assets/images/logo.png');
   final AssetImage _logoImage2 = AssetImage('assets/images/logo_outline.png');
   final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
@@ -46,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: SingleChildScrollView(
         child: new Container(
@@ -66,30 +67,22 @@ class _LoginPageState extends State<LoginPage> {
                     bottom: 10.0,
                   ),
                   padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                  decoration: new BoxDecoration(
-                    color: new Color(0x80EEEEEE),
-                  ),
+//                  decoration: new BoxDecoration(
+//                    color: new Color(0x80EEEEEE),
+//                  ),
                   child: Center(
                     child: Image(
                       image: _logoImage,
-                      width: 300.0,
+                      width: 90.0,
                     ),
                   ),
                 ),
+                new Text('Welcome to', style: textTheme.title.copyWith(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 36.0, height: 1.0), textAlign: TextAlign.center),
+                new Text('Godeals', style: textTheme.title.copyWith(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 36.0, height: 0.8), textAlign: TextAlign.center),
+                new Text('First Wholesale Hotel Booking app', style: textTheme.title.copyWith(fontWeight: FontWeight.normal, color: Colors.white, height: 2.0), textAlign: TextAlign.center),
+                new Padding(padding: EdgeInsets.only(top: 20.0)),
                 _buildLoginForm(context),
-                _buildLoginButton(context),
-                new Container(
-                  margin: const EdgeInsets.only(
-                    top: 24.0,
-                    bottom: 24.0,
-                  ),
-                  child: Center(
-                    child: Image(
-                      image: _logoImage2,
-                      width: 150.0,
-                    ),
-                  ),
-                )
+                _buildLoginButton(context)
 //                _buildForgotPasswordButton(context),
               ],
             ),
@@ -123,8 +116,9 @@ class _LoginPageState extends State<LoginPage> {
           builder: (context, snapshot) {
             print("Has data: " + snapshot.hasData.toString());
             print("Error data: " + snapshot.data.toString());
-            return Container(
-               padding: const EdgeInsets.only(left:10.0, right: 10.0),
+            return Material(
+              borderRadius: BorderRadius.circular(3.0),
+               elevation: 4.0,
                child: Column(
                   children: <Widget>[
                     new Theme(
@@ -132,61 +126,57 @@ class _LoginPageState extends State<LoginPage> {
                         child: new Stack(
                             children: <Widget>[
                               new Container(
-                                height: 43.0,
+                                height: 59.0,
                                 decoration: new BoxDecoration(
-                                    borderRadius: new BorderRadius.circular(40.0),
+                                    borderRadius: new BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(4.0)),
                                     color: Colors.white
                                 ),
                               ),
                               TextFormField(
+                                style: TextStyle(fontSize: 14.0, color: Colors.black54),
                                 decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.only(left: 40.0, top: 12.0, right: 12.0, bottom: 12.0),
-                                  border: new OutlineInputBorder(
-                                    borderSide: new BorderSide(color: Colors.white,style: BorderStyle.none),
-                                    borderRadius: new BorderRadius.circular(40.0),
-                                  ),
+                                  contentPadding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 12.0, bottom: 20.0),
+                                  border:  InputBorder.none,
                                   isDense: true,
                                   hintText: 'Username',
                                   hintStyle: new TextStyle(color: Colors.grey),
                                   labelStyle: new TextStyle(color: Colors.white, decorationColor: Colors.white),
                                   errorStyle: new TextStyle(color: Colors.black),
-                                  errorText: snapshot.hasData
-                                      ? snapshot.data['username']?.join(', ')
-                                      : null,
+//                                  errorText: snapshot.hasData
+//                                      ? snapshot.data['username']?.join(', ')
+//                                      : null,
                                 ),
                                 onSaved: (val) => _loginForm.fields['username'] = val,
                               )
                             ]
                         )
                     ),
-                    Container(height: 8.0),
+                    new Divider(height: 1.0,color: Colors.grey),
                     new Theme(
                         data: Theme.of(context).copyWith(hintColor: Colors.white),
                         child: new Stack(
                             children: <Widget>[
                               new Container(
-                                height: 43.0,
+                                height: 59.0,
                                 decoration: new BoxDecoration(
-                                    borderRadius: new BorderRadius.circular(40.0),
+                                    borderRadius: new BorderRadius.only(bottomLeft: Radius.circular(3.0), bottomRight: Radius.circular(3.0)),
                                     color: Colors.white
                                 ),
                               ),
                               TextFormField(
+                                style: TextStyle(fontSize: 14.0, color: Colors.black54),
                                 obscureText: true,
                                 decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.only(left: 40.0, top: 12.0, right: 12.0, bottom: 12.0),
-                                  border: new OutlineInputBorder(
-                                    borderSide: new BorderSide(color: Colors.white,style: BorderStyle.none),
-                                    borderRadius: new BorderRadius.circular(40.0),
-                                  ),
+                                  contentPadding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 12.0, bottom: 20.0),
+                                  border: InputBorder.none,
                                   isDense: true,
                                   hintStyle: new TextStyle(color: Colors.grey),
                                   labelStyle: new TextStyle(color: Colors.white, decorationColor: Colors.white),
                                   errorStyle: new TextStyle(color: Colors.black),
                                   hintText: 'Password',
-                                  errorText: snapshot.hasData
-                                      ? snapshot.data['password']?.join(', ')
-                                      : null,
+//                                  errorText: snapshot.hasData
+//                                      ? snapshot.data['password']?.join(', ')
+//                                      : null,
                                 ),
                                 onSaved: (val) => _loginForm.fields['password'] = val,
                               ),
@@ -204,23 +194,21 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildLoginButton(BuildContext context) {
     return Container(
-      decoration: new BoxDecoration(
-        border: new Border.all(style: BorderStyle.solid, color: new Color(0x99FFFFFF), width: 2.0),
-        borderRadius: new BorderRadius.circular(20.0),
-        color: new Color(0x99000000)
-      ),
       margin: const EdgeInsets.symmetric(
-        horizontal: 45.0
-      ),
-      padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
       ),
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 16.0,
+        bottom: 24.0,
+        top: 0.0,
+      ),
       child: RaisedButton(
-        child: Text('LOGIN' , style: new TextStyle(color: new Color(0x99FFFFFF))),
-        color: new Color(0x00000000),
+        padding: EdgeInsets.all(15.0),
+        child: Text('LOG IN' , style: new TextStyle(color: Colors.green, fontWeight: FontWeight.w700, fontSize: 14.0)),
+        color: Colors.white,
         textTheme: ButtonTextTheme.primary,
-        elevation: 0.0,
-        highlightElevation: 0.0,
+        elevation: 4.0,
         onPressed: () async {
           // save form
           _loginForm.key.currentState.save();

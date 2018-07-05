@@ -30,10 +30,20 @@ flutter:
         - asset: assets/fonts/Muli-BoldItalic.ttf
           style: italic
           weight: 700
+    - family: Proxima
+      fonts:
+        - asset: assets/fonts/ProximaNova-Regular.otf
+        - asset: assets/fonts/ProximaNova-RegularItalic.otf
+          style: italic
+        - asset: assets/fonts/ProximaNova-Bold.otf
+          weight: 700
+        - asset: assets/fonts/ProximaNova-BoldItalic.otf
+          style: italic
+          weight: 700
   assets:
     - assets/images/logo.png
     - assets/images/msa.png
     - assets/images/bg-front.jpg
     - assets/images/logo_outline.png
-    - assets/images/login-bg.jpg
+    - assets/images/login-bg.png
     - assets/images/home.jpg
