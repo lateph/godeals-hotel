@@ -43,16 +43,17 @@ class LoginForm extends BaseForm {
       Response response = await appBloc.app.api.post(
         Api.routes[ApiRoute.authLogin],
         data: {
-          'username': fields['username'],
+          'login': fields['username'],
           'password': fields['password'],
-          'deviceIdentifier':  androidInfo.id.toString(),
-          'firebaseToken': token.toString(),
+//          'deviceIdentifier':  androidInfo.id.toString(),
+//          'firebaseToken': token.toString(),
         },
         options: Options(
           contentType: ContentType.JSON,
-          headers: {'X-Device-identifier': 'random'},
+          headers: {'X-Device-identifier': 'DI-DEV-10001'},
         ),
       );
+      print('hasil login');
       print(response.data);
 
       // save accessToken
@@ -79,6 +80,7 @@ class LoginForm extends BaseForm {
     } on DioError catch (e) {
       // on 400 error
       if (e.response != null) {
+        print('hasil login error');
         print(e.response.data.toString());
         errorMessages = e.response.data['data'];
       } else {

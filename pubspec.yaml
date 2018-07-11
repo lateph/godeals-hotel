@@ -35,6 +35,11 @@ flutter:
         - asset: assets/fonts/ProximaNova-Regular.otf
         - asset: assets/fonts/ProximaNova-RegularItalic.otf
           style: italic
+        - asset: assets/fonts/ProximaNova-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/ProximaNova-SemiboldItalic.otf
+          style: italic
+          weight: 600
         - asset: assets/fonts/ProximaNova-Bold.otf
           weight: 700
         - asset: assets/fonts/ProximaNova-BoldItalic.otf

@@ -203,33 +203,6 @@ class _BottomNavigationDemoState extends State<MainPage>
   @override
   Widget build(BuildContext context) {
     AppBloc appBloc = AppBlocProvider.of(context);
-    _firebaseMessaging.requestNotificationPermissions();
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) {
-        Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("New Message"),
-        ));
-        print("onMessage: $message");
-        simpanMessage(appBloc, message);
-//        _showItemDialog(message);
-      },
-      onLaunch: (Map<String, dynamic> message) {
-        Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("New Message Launc"),
-        ));
-        print("onLaunch: $message");
-        simpanMessage(appBloc, message);
-//        _navigateToItemDetail(message);
-      },
-      onResume: (Map<String, dynamic> message) {
-        print("onResume: $message");
-        Scaffold.of(context).showSnackBar(new SnackBar(
-          content: new Text("New Message Resume"),
-        ));
-        simpanMessage(appBloc, message);
-//        _navigateToItemDetail(message);
-      },
-    );
 
     final BottomNavigationBar botNavBar = new BottomNavigationBar(
       items: _navigationViews

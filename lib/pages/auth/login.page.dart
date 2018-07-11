@@ -21,6 +21,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _loginForm.fields['username'] = 'superUser';
+    _loginForm.fields['password'] = 'p4ssw0rd123##';
+
     _firebaseMessaging.requestNotificationPermissions();
     _firebaseMessaging.configure(
 //      onMessage: (Map<String, dynamic> message) {
@@ -134,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               TextFormField(
                                 style: TextStyle(fontSize: 14.0, color: Colors.black54),
+                                initialValue: "superUser",
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 12.0, bottom: 20.0),
                                   border:  InputBorder.none,
@@ -166,6 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextFormField(
                                 style: TextStyle(fontSize: 14.0, color: Colors.black54),
                                 obscureText: true,
+                                initialValue: "p4ssw0rd123##",
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.only(left: 20.0, top: 20.0, right: 12.0, bottom: 20.0),
                                   border: InputBorder.none,

@@ -4,11 +4,12 @@ class App {
   final String name = 'AksaraPay';
   final String version = '0.0.1';
 
-  final String baseUrl = 'http://msa.server-development.net/api/v2/web';
+  final String baseUrl = 'http://188.166.180.89/godeals/api/web';
   final Map<String, String> defaultHeaders = {
-//    'X-App-key': 'EzyCashAppsDevKey',
-//    'X-App-secret': 'EzyCashAppsDevSecret',
-    'Accept': 'application/json'
+    'X-App-key': 'GoDealsDevelopmentAppKey',
+    'X-App-secret': 'GoDealsDevelopmentAppSecret',
+    'X-Device-identifier': 'DI-DEV-10001',
+    'Content-Type': 'application/json'
   };
 
   // http client
