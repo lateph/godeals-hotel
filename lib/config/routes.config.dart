@@ -63,5 +63,5 @@ Widget firstScreen(AuthStatus authStatus) {
     return VerifyDevicePage();
   }
 
-  return MainPage();
+  return HomePage();
 }

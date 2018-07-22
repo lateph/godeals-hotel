@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:inka_msa/config/style.config.dart';
 import 'package:inka_msa/bloc/app.bloc.dart';
+import 'package:inka_msa/helpers/rating.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';
@@ -11,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final AssetImage _logoImage = AssetImage('assets/images/msa.png');
+  final AssetImage _logoImage = AssetImage('assets/images/hotel.jpg');
   AssetImage background = AssetImage('assets/images/home.jpg');
   final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
   bool launch = false;
@@ -92,7 +93,7 @@ class _HomePageState extends State<HomePage> {
           scrollDirection: Axis.vertical,
           slivers: <Widget>[
             new SliverAppBar(
-              expandedHeight: 200.0,
+              expandedHeight: 185.0,
               elevation: 0.0,
               pinned: true,
               title: const Text('Godeals', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 26.0),),
@@ -105,38 +106,29 @@ class _HomePageState extends State<HomePage> {
                     left: 24.0,
                     bottom: 10.0,
                   ),
-                  padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                  padding: const EdgeInsets.only(top: 30.0),
                   child: Center(
-                    child: new Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: new Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        new Text('You Have 10 Active Opportunity', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w600),),
-                        new Container(
-                            margin: const EdgeInsets.only(
-                              top: 10.0,
-                              right: 10.0,
-                              left: 10.0,
-                              bottom: 10.0,
-                            ),
-                           padding: const EdgeInsets.only(
-                             top: 10.0,
-                             right: 10.0,
-                             left: 10.0,
-                             bottom: 10.0,
-                           ),
-                           decoration: BoxDecoration(
-                             border: Border.all(color: Colors.white,width: 2.0),
-                             borderRadius: BorderRadius.circular(13.0)
-                           ),
-                           child: new Text('23 Hours 57 Min', style: TextStyle(color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.w600),),
-                        ),
+                        _buildButtonHeader(context, Icons.local_offer, 'Active Bid', 20),
+                        _buildButtonHeader(context, Icons.event_available, 'Deal', 0),
+                        _buildButtonHeader(context, Icons.receipt, 'Invoice', 0),
                       ],
                     ),
                   ),
                 ),
               )
             ),
-            StreamBuilder(
+            new SliverList(
+                delegate: SliverChildListDelegate([
+                  new Container(
+                    child: new Text('Sugested Opportunity', style: TextStyle(fontWeight: FontWeight.w600, color: textGrey, fontSize: 20.0),),
+                    margin: EdgeInsets.only(left: 10.0, top: 10.0),
+                  )
+                ])
+            ),
+            new StreamBuilder(
               stream: appBloc.auth.status,
               builder: (context, snapshot) {
                 List<dynamic> childs = [1,2,3];
@@ -199,86 +191,76 @@ class _HomePageState extends State<HomePage> {
             ],
           )
       ),
-      floatingActionButton: new FloatingActionButton(
-          elevation: 0.0,
-          child: new Icon(Icons.check),
-          backgroundColor: new Color(0xFFE57373),
-          onPressed: (){
-            if (appBloc.auth.deviceState.attributes['notif'].runtimeType.toString() == 'List<Map<String, String>>' || appBloc.auth.deviceState.attributes['notif'].runtimeType.toString() == 'List<dynamic>'){
-              appBloc.auth.deviceState.attributes['notif'].insert(0,
-                {
-                  'title': 'asd',
-                  'messsage': 'asdasdsadsd',
-                  'tanggal': '2018-01-01'
-                });
-            }
-            else{
-              appBloc.auth.deviceState.attributes['notif'] = [
-                {
-                  'title': 'asd',
-                  'messsage': 'asdasdsadsd',
-                  'tanggal': '2018-01-01'
-                }
-              ];
-            }
-            appBloc.auth.deviceState.save();
-            appBloc.auth.updateAuthStatus();
-          }
-      ),
     );
   }
 
-  Widget _buildCard(BuildContext context, index) {
-    if (index == 0){
-      return _buildOnBidding(context);
-    }
-    else if(index == 1){
-      return _buildCanceledOnBidding(context);
-    }
-    else{
-      return _buildComplete(context);
-    }
+
+  Widget _buildButtonHeader(BuildContext context, IconData icon, String text, int count) {
+    return new Column(
+      children: <Widget>[
+        new Stack(
+          children: <Widget>[
+            new Container(
+              margin: const EdgeInsets.only(
+                top: 10.0,
+                right: 10.0,
+                left: 10.0,
+                bottom: 10.0,
+              ),
+              padding: const EdgeInsets.only(
+                top: 10.0,
+                right: 10.0,
+                left: 10.0,
+                bottom: 10.0,
+              ),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white,width: 1.5),
+                  borderRadius: BorderRadius.circular(13.0)
+              ),
+              child: Icon(icon, color: Colors.white,size: 50.0,),
+            ),
+            count > 0 ? new Positioned(  // draw a red marble
+              top: 2.0,
+              right: 2.0,
+              child: new CircleAvatar(child: new Text(count.toString(), style: TextStyle(fontSize: 12.0, color: warnaHijau, fontWeight: FontWeight.w600),), radius: 12.0, backgroundColor: Colors.white,),
+            ) : null
+          ].where(notNull).toList(),
+        ),
+        new Text(text, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18.0),)
+      ],
+      crossAxisAlignment: CrossAxisAlignment.center,
+    );
   }
-  Widget _buildOnBidding(BuildContext context) {
+  Widget _buildCard(BuildContext context, index) {
+    return _buildMainCard(context);
+  }
+  Widget _buildMainCard(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
         top: 10.0,
-        right: 10.0,
-        left: 10.0,
+//        right: 10.0,
+//        left: 10.0,
         bottom: 0.0,
       ),
       padding: const EdgeInsets.only(top:10.0, bottom: 10.0, left: 10.0, right: 10.0),
-      decoration: new BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5.0)
-      ),
+//      decoration: new BoxDecoration(
+//          color: Colors.white,
+//          borderRadius: BorderRadius.circular(5.0)
+//      ),
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Icon(Icons.error, color: warnaOranye),
-              Padding(padding: EdgeInsets.only(left: 10.0),),
-              Text('10 New Offers',style: new TextStyle(fontWeight: FontWeight.w600, fontSize: 18.0, color: warnaHijau)),
-            ],
-          ),
-          new Divider(color: Colors.grey),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                height: 80.0,
+              Image(
+                image: _logoImage,
                 width: 80.0,
-                decoration: BoxDecoration(
-                    border: Border.all(color: hijauMuda, width: 2.0),
-                    borderRadius: BorderRadius.circular(8.0)
-                ),
-                child: IconButton(icon: new Icon(Icons.timer, color: hijauMuda,size: 65.0), padding: EdgeInsets.all(0.0)),
+                height: 80.0,
               ),
-              new Padding(padding: EdgeInsets.only(left: 5.0)),
+              new Padding(padding: EdgeInsets.only(left: 10.0)),
               new Expanded(
                 child: new Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -286,99 +268,52 @@ class _HomePageState extends State<HomePage> {
                   children: <Widget>[
                     Row(
                       children: <Widget>[
-                        Container(
-                          child: Text('On Bidding', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
-                          decoration: BoxDecoration(
-                              color: hijauMuda,
-                              borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          padding: EdgeInsets.all(4.0),
-                        ),
-                        new Padding(padding: EdgeInsets.only(left: 5.0)),
-                        Icon(Icons.access_time, color: Colors.grey,),
-                        new Padding(padding: EdgeInsets.only(left: 5.0)),
                         new Expanded(
                           child: new Text('4 hrs 15 mins Remaining', style: TextStyle(color: Colors.grey),),
-                        )
+                        ),
+                        Icon(Icons.clear, color: Colors.grey,),
                       ],
                       crossAxisAlignment: CrossAxisAlignment.start,
                     ),
+                    Text('Abdul Qodir', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: textGrey, height: 0.6)),
+                    new StarRating(
+                      rating: 4.5,
+                      color: Colors.orange,
+                      onRatingChanged: (rating) => () => {
+
+                      },
+                    ),
+                    Text('Check in / Check out date', style: TextStyle(color: Colors.grey, fontSize: 12.0, height: 1.5),),
+                    Text('13 May 2018 / 18 May 2018', style: TextStyle(fontWeight: FontWeight.w600, color: textGrey),),
+
+                    Text('Number Of Rooms', style: TextStyle(color: Colors.grey, fontSize: 12.0, height: 1.5),),
                     Row(
                       children: <Widget>[
-                        Icon(Icons.location_on, color: Colors.grey),
-                        new Expanded(
-                            child: Text('Makka, Madinah', style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600, color: textGrey))
-                        )
+                        Text('5 Room', style: TextStyle(fontWeight: FontWeight.w600, color: textGrey),),
+                        new Container(
+                          width: 1.0,
+                          height: 12.0,
+                          margin: EdgeInsets.only(left: 5.0, right: 5.0),
+                          decoration: new BoxDecoration(
+                              color: Colors.grey
+                          ),
+                        ),
+                        Text('2 Person / Room', style: TextStyle(fontWeight: FontWeight.w600, color: textGrey),),
                       ],
                     ),
-                    Text('Check in / Check out date', style: TextStyle(color: Colors.grey, fontSize: 12.0),),
-                    Text('13 May 2018 / 18 May 2018', style: TextStyle(fontWeight: FontWeight.w600, color: textGrey),),
-                    Text('2 Person / Room', style: TextStyle(fontWeight: FontWeight.w600, color: textGrey),)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text('Bid Now', style: TextStyle(fontWeight: FontWeight.w600, color: warnaHijau),),
+                        Icon(Icons.chevron_right, color: warnaHijau,)
+                      ],
+                    )
                   ],
                 ),
               ),
             ],
           ),
           new Divider(color: Colors.grey),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Icon(Icons.hotel, color: textGrey, size: 30.0,),
-              new Container(
-                width: 1.0,
-                height: 30.0,
-                decoration: new BoxDecoration(
-                    color: Colors.grey
-                ),
-              ),
-              new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('Total', style: TextStyle(color: Colors.grey),),
-                  Text('10', style: TextStyle(color: textGrey, fontWeight: FontWeight.w600),)
-                ],
-              ),
-              new Container(
-                width: 1.0,
-                height: 30.0,
-                decoration: new BoxDecoration(
-                    color: Colors.grey
-                ),
-              ),
-              new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('Confirmed', style: TextStyle(color: Colors.grey),),
-                  Text('3', style: TextStyle(color: textGrey, fontWeight: FontWeight.w600),)
-                ],
-              ),
-              new Container(
-                width: 1.0,
-                height: 30.0,
-                decoration: new BoxDecoration(
-                    color: Colors.grey
-                ),
-              ),
-              new Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('Waiting', style: TextStyle(color: Colors.grey),),
-                  Text('4', style: TextStyle(color: textGrey, fontWeight: FontWeight.w600),)
-                ],
-              ),
-              new Container(
-                width: 1.0,
-                height: 30.0,
-                decoration: new BoxDecoration(
-                    color: Colors.grey
-                ),
-              ),
-              Text('30%', style: TextStyle(color: textGrey, fontWeight: FontWeight.w600, fontSize: 22.0))
-            ],
-          )
         ],
       ),
     );
